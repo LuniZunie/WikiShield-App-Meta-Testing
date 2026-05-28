@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    <style>
+        :root {
+            --max-z-index: 2147483647;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            /* Theme dependent */
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 6px;
+            border: 2px solid;
+
+            /* Theme dependent */
+            background: rgba(102, 126, 234, .4);
+            border-color: rgba(0, 0, 0, .2);
+
+            &:hover {
+                /* Theme dependent */
+                background: rgba(102, 126, 234, .6);
+            }
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+
+            padding: clamp(1rem, 5vw, 2.5rem) clamp(1rem, 4vw, 1.25rem);
+
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+            /* Theme dependent */
+            background: linear-gradient(135deg,
+                rgba(15, 12, 41, 1),
+                rgba(25, 22, 50, 1),
+                rgba(36, 36, 62, 1)
+            );
+            color: rgba(255, 255, 255, .9);
+
+            & > .container {
+                width: 100%;
+                max-width: 900px;
+                height: 100%;
+
+                position: relative;
+                top: 50%;
+
+                margin: 0 auto;
+                padding: 10px;
+
+                overflow: hidden auto;
+
+                transform: translateY(-50%);
+
+                & > .header {
+                    margin-bottom: clamp(2rem, 8vw, 3.125rem);
+
+                    text-align: center;
+
+                    & > .logo {
+                        width: clamp(75px, 20vw, 100px);
+                        height: clamp(75px, 20vw, 100px);
+                        margin: 0 auto clamp(0.75rem, 3vw, 1rem);
+
+                        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .3));
+
+                        & > img {
+                            object-fit: contain;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    & > .title {
+                        margin-bottom: clamp(0.5rem, 2vw, 0.75rem);
+
+                        font-size: clamp(1.75rem, 6vw, 2rem);
+                        font-weight: 600;
+                        line-height: 1.2;
+
+                        /* Theme dependent */
+                        background: linear-gradient(135deg,
+                            rgba(102, 126, 234, 1),
+                            rgba(118, 75, 162, 1)
+                        );
+                        -webkit-background-clip: text;
+                                background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+
+                    & > .subtitle {
+                        font-size: clamp(0.875rem, 3vw, 1rem);
+                        font-weight: 300;
+                        line-height: 1.4;
+
+                        /* Theme dependent */
+                        color: rgba(255, 255, 255, .6);
+                    }
+                }
+
+                & > #clock {
+                    margin-bottom: clamp(1.5rem, 6vw, 2rem);
+
+                    font-size: clamp(2rem, 10vw, 3rem);
+                    font-weight: 200;
+                    text-align: center;
+                    letter-spacing: 0.05em;
+
+                    /* Theme dependent */
+                    color: rgba(255, 255, 255, .9);
+                }
+
+                & > .search-section {
+                    margin-bottom: clamp(2rem, 8vw, 3.125rem);
+
+                    & > .search-box {
+                        width: 100%;
+                        max-width: 600px;
+
+                        margin: 0 auto;
+
+                        position: relative;
+
+                        & > #search-input {
+                            width: 100%;
+
+                            outline: none;
+                            border-radius: 30px;
+                            border: 2px solid;
+
+                            padding: clamp(0.75rem, 2vw, 1rem) clamp(2rem, 4vw, 3.125rem) clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.25rem);
+
+                            font-size: clamp(0.875rem, 2.5vw, 1rem);
+
+                            transition: background .3s ease,
+                                        border-color .3s ease,
+                                        box-shadow .3s ease;
+
+                            /* Theme dependent */
+                            background: rgba(255, 255, 255, .05);
+                            border-color: rgba(255, 255, 255, .1);
+                            color: rgba(255, 255, 255, 1);
+                            -webkit-backdrop-filter: blur(10px);
+                                    backdrop-filter: blur(10px);
+
+                            &:focus {
+                                /* Theme dependent */
+                                background: rgba(255, 255, 255, .08);
+                                box-shadow: 0 0 20px rgba(102, 126, 234, .2);
+                                border-color: rgba(102, 126, 234, .5);
+                            }
+                            &::placeholder {
+                                /* Theme dependent */
+                                color: rgba(255, 255, 255, .4);
+                            }
+                        }
+
+                        & > .search-icon {
+                            pointer-events: none;
+
+                            position: absolute;
+                            right: clamp(1rem, 2vw, 1.25rem);
+                            top: 50%;
+
+                            font-size: clamp(1rem, 2vw, 1.125rem);
+
+                            opacity: .5;
+
+                            transform: translateY(-50%);
+                        }
+
+                        & > #autocomplete-dropdown {
+                            z-index: var(--max-z-index);
+
+                            display: none;
+                            max-height: 250px;
+
+                            border-radius: 12px;
+                            border: 1px solid;
+
+                            position: absolute;
+                            top: calc(100% + 8px);
+                            left: 0;
+                            right: 0;
+
+                            overflow: hidden auto;
+
+                            /* Theme dependent */
+                            background: rgba(15, 12, 41, .98);
+                            box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+                            border-color: rgba(102, 126, 234, .2);
+                            -webkit-backdrop-filter: blur(20px);
+                                    backdrop-filter: blur(20px);
+
+                            &::-webkit-scrollbar {
+                                width: 8px;
+                            }
+
+                            &::-webkit-scrollbar-track {
+                                background: transparent;
+                            }
+
+                            &::-webkit-scrollbar-thumb {
+                                /* Theme dependent */
+                                background: rgba(102, 126, 234, .3);
+                                border-radius: 4px;
+
+                                &:hover {
+                                    /* Theme dependent */
+                                    background: rgba(102, 126, 234, .5);
+                                }
+                            }
+
+                            & > .autocomplete-item {
+                                cursor: pointer;
+
+                                display: flex;
+                                align-items: center;
+
+                                padding: clamp(0.625rem, 2vw, 0.75rem) clamp(0.95rem, 2vw, 1rem);
+
+                                transition: background .2s ease;
+
+                                &:not(:last-child) {
+                                    border-bottom: 1px solid;
+
+                                    /* Theme dependent */
+                                    border-bottom-color: rgba(255, 255, 255, .03);
+                                }
+
+                                &:hover, &.selected {
+                                    /* Theme dependent */
+                                    background: rgba(102, 126, 234, .15);
+                                }
+
+                                & > i {
+                                    min-width: clamp(18px, 4vw, 20px);
+                                    width: clamp(18px, 4vw, 20px);
+
+                                    margin-right: clamp(0.75rem, 2vw, 1rem);
+
+                                    font-size: clamp(1rem, 2.5vw, 1.125rem);
+
+                                    opacity: .6;
+                                }
+
+                                & > .autocomplete-text {
+                                    display: flex;
+                                    flex-direction: column;
+                                    flex: 1;
+                                    gap: 2px;
+
+                                    overflow: hidden;
+
+                                    & > .autocomplete-title {
+                                        font-size: clamp(0.813rem, 2vw, 0.875rem);
+                                        font-weight: 500;
+
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+
+                                        /* Theme dependent */
+                                        color: rgba(255, 255, 255, .9);
+                                    }
+
+                                    & > .autocomplete-url {
+                                        font-size: clamp(0.75rem, 1.5vw, 0.75rem);
+
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+
+                                        /* Theme dependent */
+                                        color: rgba(255, 255, 255, .5);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                & > .quick-links {
+                    margin-bottom: clamp(2rem, 8vw, 2.5rem);
+
+                    & > .section-title {
+                        margin-bottom: clamp(1rem, 3vw, 1.25rem);
+                        padding-left: clamp(0.3rem, 1vw, 0.5rem);
+
+                        font-size: clamp(1.25rem, 3.5vw, 1.25rem);
+                        font-weight: 500;
+
+                        /* Theme dependent */
+                        color: rgba(255, 255, 255, .8);
+                    }
+
+                    & > .links-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                        gap: clamp(0.75rem, 2vw, 1rem);
+
+                        & > .link-card {
+                            cursor: pointer;
+
+                            display: block;
+
+                            border: 1px solid;
+                            border-radius: 12px;
+
+                            padding: clamp(1rem, 3vw, 1.25rem);
+
+                            text-align: center;
+                            text-decoration: none;
+                            color: inherit;
+
+                            transition: background .3s ease,
+                                        border-color .3s ease,
+                                        transform .3s ease,
+                                        box-shadow .3s ease;
+
+                            /* Theme dependent */
+                            background: rgba(255, 255, 255, .05);
+                            border-color: rgba(255, 255, 255, .1);
+
+                            &:hover {
+                                transform: translateY(-3px);
+
+                                /* Theme dependent */
+                                background: rgba(255, 255, 255, .08);
+                                border-color: rgba(102, 126, 234, .5);
+                                box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+                            }
+
+                            & > .link-icon {
+                                margin-bottom: clamp(0.5rem, 2vw, 0.75rem);
+
+                                font-size: clamp(1.75rem, 6vw, 2.25rem);
+                            }
+
+                            & > .link-title {
+                                font-weight: 500;
+
+                                font-size: clamp(0.813rem, 2vw, 0.875rem);
+                                line-height: 1.3;
+                            }
+                        }
+                    }
+                }
+
+                & > .footer {
+                    margin-top: clamp(2rem, 8vw, 2.5rem);
+
+                    font-size: clamp(0.75rem, 2vw, 0.875rem);
+                    text-align: center;
+
+                    /* Theme dependent */
+                    color: rgba(255, 255, 255, .4);
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            body > .container > .links-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="../../assets/icons/256x256.png" alt="WikiShield Logo">
+            </div>
+            <h1 class="title">WikiShield</h1>
+            <p class="subtitle">Wikipedia vandalism detection and counter-vandalism tool</p>
+        </div>
+
+        <div class="clock" id="clock">--:--</div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input
+                    type="text"
+                    placeholder="Search google or enter a URL..."
+                    id="search-input"
+                    autocomplete="off"
+                >
+                <i class="fas fa-search search-icon"></i>
+                <div id="autocomplete-dropdown"></div>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <h2 class="section-title">Quick Links</h2>
+            <div class="links-grid">
+                <a href="https://en.wikipedia.org/wiki/Special:RecentChanges" class="link-card">
+                    <div class="link-icon"><i class="fas fa-clock"></i></div>
+                    <div class="link-title">Recent Changes</div>
+                </a>
+                <a href="https://en.wikipedia.org/wiki/Special:Watchlist" class="link-card">
+                    <div class="link-icon"><i class="fas fa-bookmark"></i></div>
+                    <div class="link-title">Watchlist</div>
+                </a>
+                <a href="https://en.wikipedia.org" class="link-card">
+                    <div class="link-icon"><i class="fab fa-wikipedia-w"></i></div>
+                    <div class="link-title">Wikipedia</div>
+                </a>
+                <a href="https://en.wikipedia.org/wiki/Special:MyContributions" class="link-card">
+                    <div class="link-icon"><i class="fas fa-edit"></i></div>
+                    <div class="link-title">Contributions</div>
+                </a>
+                <a href="https://en.wikipedia.org/wiki/Special:Log" class="link-card">
+                    <div class="link-icon"><i class="fas fa-list-alt"></i></div>
+                    <div class="link-title">Logs</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>WikiShield Browser &copy; 2026 LuniZunie.</p>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search), host = params.get("host");
+        document.querySelectorAll(".link-card").forEach($card => {
+            $card.href = $card.href.replace(/^https?:\/\/en\.wikipedia\.org/, `https://${host || "en.wikipedia.org"}`);
+        });
+
+        class Memory extends Map {
+            constructor(limit = 100) {
+                super();
+                this.limit = limit;
+            }
+
+            set(key, value) {
+                if (this.size >= this.limit)
+                    this.delete(this.keys().next().value);
+                return super.set(key, value);
+            }
+        }
+
+        const $clock = document.querySelector("#clock");
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, "0");
+            const m = String(now.getMinutes()).padStart(2, "0");
+            $clock.textContent = `${h}:${m}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        class Autocomplete {
+            static isUrl(string) {
+                const urlPattern = /^(https?:\/\/)?(([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}(\:[0-9]+)?(\/[-a-z\d%_.~+]*)*$/i;
+                const localhostPattern = /^(https?:\/\/)?(localhost|127\.0\.0\.1)(:\d+)?/i;
+
+                return urlPattern.test(string) || localhostPattern.test(string) || string.includes(".");
+            }
+
+            #cache = new Memory(1000);
+            #index = -1;
+            #debounceTimer = null;
+
+            constructor($input, $dropdown) {
+                this.$input = $input;
+                this.$dropdown = $dropdown;
+
+                $input.addEventListener("input", (e) => {
+                    const query = e.target.value.trim();
+                    clearTimeout(this.#debounceTimer);
+
+                    if (!query)
+                        return void this.hide();
+
+                    this.#debounceTimer = setTimeout(async () => {
+                        this.show(await this.#fetchSuggestions(query));
+                    }, 150);
+                });
+
+                $input.addEventListener("keydown", (e) => {
+                    const items = this.$dropdown.querySelectorAll(".autocomplete-item");
+
+                    switch (e.key) {
+                        case "ArrowDown":
+                            e.preventDefault();
+                            this.#index = Math.min(this.#index + 1, items.length - 1);
+                            this.#highlight();
+                            break;
+                        case "ArrowUp":
+                            e.preventDefault();
+                            this.#index = Math.max(this.#index - 1, -1);
+                            this.#highlight();
+                            break;
+                        case "Enter": {
+                            e.preventDefault();
+                            const selected = items[this.#index];
+                            if (selected)
+                                this.#navigate(selected.dataset.url);
+                            else if (this.$input.value.trim())
+                                this.#navigate(this.$input.value.trim());
+                            this.hide();
+                        } break;
+                        case "Escape":
+                            this.hide();
+                            break;
+                    }
+                });
+
+                $input.addEventListener("focus", async () => {
+                    const query = this.$input.value.trim();
+                    if (query)
+                        this.show(await this.#fetchSuggestions(query));
+                });
+                $input.addEventListener("blur", () => setTimeout(() => this.hide(), 150));
+            }
+
+            async #fetchSuggestions(query) {
+                if (Autocomplete.isUrl(query))
+                    return [{ title: query, url: query, isSearch: false }];
+
+                if (this.#cache.has(query))
+                    return this.#cache.get(query);
+
+                try {
+                    const $script = document.createElement("script");
+                    const callback = `autocompleteCallback_${Date.now()}`;
+
+                    const data = await new Promise((resolve) => {
+                        window[callback] = (data) => {
+                            delete window[callback];
+                            $script.remove();
+                            resolve(data);
+                        };
+
+                        $script.src = `https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(query)}&callback=${callback}`;
+                        document.head.appendChild($script);
+
+                        setTimeout(() => {
+                            if (window[callback]) {
+                                delete window[callback];
+                                $script.remove();
+                                resolve([query, []]);
+                            }
+                        }, 3000);
+                    });
+
+                    const suggestions = (data[1] || []).map(item => ({
+                        title: item,
+                        url: `https://www.google.com/search?q=${encodeURIComponent(item)}`,
+                        isSearch: true,
+                    }));
+
+                    this.#cache.set(query, suggestions);
+                    return suggestions;
+                } catch (error) {
+                    console.error("Failed to fetch suggestions:", error);
+                    return [];
+                }
+            }
+
+            show(suggestions) {
+                if (suggestions.length === 0)
+                    return void this.hide();
+
+                this.$dropdown.replaceChildren();
+                this.#index = -1;
+
+                for (const item of suggestions) {
+                    const $item = document.createElement("div");
+                    $item.className = "autocomplete-item";
+                    $item.dataset.url = item.url;
+
+                    const $icon = document.createElement("i");
+                    $icon.className = item.isSearch ? "fas fa-magnifying-glass" : "fas fa-globe";
+
+                    const $text = document.createElement("div");
+                    $text.className = "autocomplete-text";
+
+                    const $title = document.createElement("div");
+                    $title.className = "autocomplete-title";
+                    $title.textContent = item.title;
+
+                    const $url = document.createElement("div");
+                    $url.className = "autocomplete-url";
+                    $url.textContent = item.isSearch ? "Search Google" : item.url;
+
+                    $text.appendChild($title);
+                    $text.appendChild($url);
+                    $item.appendChild($icon);
+                    $item.appendChild($text);
+
+                    $item.addEventListener("click", () => this.#navigate(item.url));
+
+                    this.$dropdown.appendChild($item);
+                }
+
+                this.$dropdown.style.display = "block";
+            }
+
+            hide() {
+                this.$dropdown.style.display = "none";
+                this.#index = -1;
+            }
+
+            #navigate(input) {
+                if (/^https?:\/\//i.test(input))
+                    window.location.href = input;
+                else if (Autocomplete.isUrl(input))
+                    window.location.href = `https://${input}`;
+                else
+                    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+            }
+
+            #highlight() {
+                const $items = this.$dropdown.querySelectorAll(".autocomplete-item");
+                $items.forEach((item, i) => item.classList.toggle("selected", i === this.#index));
+                if (this.#index >= 0 && $items[this.#index])
+                    $items[this.#index].scrollIntoView({ block: "nearest" });
+            }
+        }
+
+        new Autocomplete(document.querySelector("#search-input"), document.querySelector("#autocomplete-dropdown"));
+    </script>
+</body>
+</html>
