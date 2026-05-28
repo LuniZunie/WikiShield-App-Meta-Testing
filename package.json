@@ -1,6 +1,6 @@
 {
   "name": "WikiShield",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Testing repo for the WikiShield-App.",
   "main": "index.js",
   "repository": {
@@ -77,11 +77,11 @@
           "CompanyName": "WikiShield Team",
           "FileDescription": "WikiShield Application",
           "ProductName": "WikiShield",
-          "FileVersion": "1.0.0",
-          "ProductVersion": "1.0.0"
+          "FileVersion": "1.0.1",
+          "ProductVersion": "1.0.1"
         },
-        "appVersion": "1.0.0",
-        "buildVersion": "1.0.0"
+        "appVersion": "1.0.1",
+        "buildVersion": "1.0.1"
       },
       "makers": [
         {
@@ -247,7 +247,7 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "WikiShield",
-      "artifactName": "WikiShield-Setup-1.0.0.exe"
+      "artifactName": "WikiShield-Setup-1.0.1.exe"
     },
     "publish": {
       "provider": "github",
